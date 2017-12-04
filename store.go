@@ -25,6 +25,10 @@ type YMLStore struct {
 	scripts sync.Map
 }
 
+func NewYMLStore() Store {
+	return &YMLStore{}
+}
+
 func (store *YMLStore) MergeVariables(vals map[string]string) map[string]string {
 	result := make(map[string]string)
 	store.env.Range(func(k interface{}, v interface{}) bool {
@@ -89,11 +93,11 @@ func (store *YMLStore) StoreFromFile(path string) error {
 }
 
 func (store *YMLStore) StoreFromDirectory(path string) error {
-	dir_list, err := ioutil.ReadDir(path)
+	dirList, err := ioutil.ReadDir(path)
 	if err != nil {
 		return err
 	}
-	for _, file := range dir_list {
+	for _, file := range dirList {
 		if file.IsDir() == false && strings.HasSuffix(file.Name(), ".yml") {
 			err = store.StoreFromFile(filepath.Join(path, file.Name()))
 			if err != nil {
