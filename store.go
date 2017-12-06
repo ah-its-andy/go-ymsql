@@ -74,7 +74,7 @@ func (store *YMLStore) Load(name string) (Scripting, error) {
 	script := &YMLScripting{
 		s:         s.(*YMLModel),
 		store:     store,
-		variables: store.MergeVariables(s.(*YMLScripting).Variables()),
+		variables: store.MergeVariables(s.(*YMLModel).Variables),
 	}
 
 	return script, nil
